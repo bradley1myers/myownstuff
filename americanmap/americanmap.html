@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+<div class="header"> </div>
+	<title>Armstrong American Map</title></title>
+	<meta name ="author" content="Brad Myers">
+	<meta name ="description" content="American Products">
+	<link rel="stylesheet" href="style.css">
+	<link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Oswald:400,700' rel='stylesheet' type='text/css'>
+	<link rel="icon" href="images/favicon.ico" />
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBwvRkgc1gfJClHPd9_zYZEzHgbZ8SZekM"></script>
+
+	
+
+	<style>
+	.background{
+		color:#ffffff;
+		opacity:.9;
+		background-color:#333333;
+		padding:5px;
+		margin:10px;
+	}	
+	.Footer{  <!--not to be confused with .footer -->
+		position: absolute;
+		bottom: 0;
+		margin-left: 76%;
+		margin-right: 5%;
+		margin-bottom: 1%;
+		float: right;
+		background-color: #333333;
+		color:#ffffff;
+	}
+	#map{
+       height: 80vh;
+       width:  60vw;
+    }
+    .centerText{
+    	text-align:center;
+    }
+    input, button{
+    	color:black;
+    }
+	</style>	
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="index.html">Armstrong Tours</a>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <li><a href="index.html">Home</a></li>
+        <li class="dropdown"><!-- dropdown start -->
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">American Tours <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu"><!-- links go here -->
+            <li><a href="american.html">American Tours</a></li>
+            <li class="active"><a href="americanmap.html">American Map</a></li>
+          </ul>
+        </li><!-- dropdown end -->
+        <li class="dropdown"><!-- dropdown start -->
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">European Tours <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu"><!-- links go here -->
+            <li><a href="europe.html">European Tours</a></li>
+            <li><a href="europemap.html">European Map</a></li>
+          </ul>
+        </li><!-- dropdown end -->
+        <li><a href="links.html">Links</a></li>
+        <li><a href="register.html">Register</a></li>
+      </ul> <!-- nav navbar-nav-->
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+</head>
+<body>
+<br>
+<div class="fluid-container">
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="background">
+				<span class="centerText"><h3>American Tours</h3></span>
+				<form onsubmit="calcDistance();">
+					Enter your Address:
+					<input type="text" id="addressInput">&nbsp;&nbsp;<button>Submit</button>
+				</form>
+				<ul>
+					<br><br><br><li class="bike"><h3>Route 66</h3></li>
+						<p>Start: Chicago, Illinois</p>
+						<p>Distance:</p>
+					<li class="bike"><h3>Chesapeake Bay</h3></li>
+						<p>Start: Chicago, Illinois</p>
+						<p>Distance:</p>
+					<li class="bike"><h3>Blue Ridge Parkway</h3></li>
+						<p>Start: Chicago, Illinois</p>
+						<p>Distance:</p>
+					<li class="bike"><h3>Civil War Campaign</h3></li>
+						<p>Start: Chicago, Illinois</p>
+						<p>Distance:</p>
+					<li class="bike"><h3>Alaskan Adventure</h3></li>
+						<p>Start: Chicago, Illinois</p>
+						<p>Distance:</p>				
+					<li class="bike"><h3>Moab Slick Rock</h3></li>
+						<p>Start: Chicago, Illinois</p>
+						<p>Distance:</p>
+				</ul>
+			</div>
+		</div>
+		<div class="col-sm-8">
+			<div id="map" class="map"></div>
+		</div>
+	</div>
+</div>
+</body>
+<script>
+
+		var address;
+		var route = new google.maps.LatLng(41.878114, -87.629798);
+		var chesapeake = new google.maps.LatLng(37.617807, -76.292560);
+		var blueRidge =  new google.maps.LatLng(35.477057, -83.320586);
+		var civilWar = new google.maps.LatLng(32.776475, -79.931051);
+		var alaskan = new google.maps.LatLng(58.301944, -134.419722);
+		var moab = new google.maps.LatLng(38.594250, -109.567036);
+
+		function initialize(){
+		    var mapOptions = {
+		      zoom: 3,
+		      center: new google.maps.LatLng(40.034452, -79.606583)
+		    };
+		        var map = new google.maps.Map(document.getElementById("map"), mapOptions);
+
+		    //Route 66
+
+		    var marker = new google.maps.Marker({
+		    	position: route,
+		    	map: map,
+		    	title:"Route 66"
+		    });
+
+		    		    //Chesapeake Bay
+		   	
+		    var marker = new google.maps.Marker({
+		    	position: chesapeake,
+		    	map: map,
+		    	title:"Chesapeake Bay"
+		    });
+
+		    		    //Blue Ridge Parkway
+		    
+		    var marker = new google.maps.Marker({
+		    	position: blueRidge,
+		    	map: map,
+		    	title:"Blue Ridge"
+		    });
+
+		    		    //Civil War Campaign
+		    
+		    var marker = new google.maps.Marker({
+		    	position: civilWar,
+		    	map: map,
+		    	title:"Civil War Campaign"
+		    });
+
+		    		    //Alaskan Adventure
+		    
+		    var marker = new google.maps.Marker({
+		    	position: alaskan,
+		    	map: map,
+		    	title:"Alaskan Adventure"
+		    });
+
+		    		    //Moab Slick Rock
+		    
+		    var marker = new google.maps.Marker({
+		    	position: moab,
+		    	map: map,
+		    	title:"Moab Slick Rock"
+		    });
+		}
+
+		function calcDistance(){
+			var addressInput = document.getElementById('addressInput').value;
+			alert(addressInput);
+		    var service = new google.maps.DistanceMatrixService();
+
+		    service.getDistanceMatrix(
+		    {
+		    origins: [addressInput],
+		    destinations: [route],
+		    travelMode: google.maps.TravelMode.DRIVING,
+		    unitSystem: google.maps.UnitSystem.IMPERIAL
+		    },
+		    distCallback);
+		  }
+
+		function distCallback(response, status){
+			alert('test');
+		  if (status == google.maps.DistanceMatrixStatus.OK) {
+		  var origins = response.originAddresses;
+		  var destinations = response.destinationAddresses;
+
+		    for (var i = 0; i < origins.length; i++) {
+		    var results = response.rows[i].elements;
+		    for (var j = 0; j < results.length; j++) {
+		      var element = results[j];
+		      console.log(results);
+		      var from = origins[i];
+		      var to = destinations[j];
+		      console.log(results[1].distance.text);
+		      // document.getElementById('start').innerHTML = "From " + from + " to " + to;
+		      // document.getElementById("distance").innerHTML = results[1].distance.text;
+		      }
+		    }
+		  }
+		}
+
+		  google.maps.event.addDomListener(window, 'load', initialize);
+	</script>
+</html>
